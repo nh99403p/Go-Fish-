@@ -1,31 +1,53 @@
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Random;
-
 
 public class GoFishGame
 {
     public static void main(String[] args)
     {
-        Scanner scan = new Scanner(System.in);
-        int books1 = 0;
-        int books2 = 0;
-        int[] deck = {1, 2, 3, 4, 5, 6 , 7, 8, 9, 10, 11 ,12, 13, 14, 15 , 16 , 17 , 18};
-        int[] player1 = {1, 2, 3, 4};
-        int[]player2 = {1, 2, 3, 4};
+        CardDeck deck = new CardDeck();
+        CardHand player1 = new CardHand();
+        CardHand player2 = new CardHand();
 
-        while(player1[] != null || player2[] != null)
+        int books1 = 0;
+        int books2 = 0;  
+        
+        CardHand turn1Player = player1;
+        CardHand turn2Player = player2;
+        int turnCount = 1;
+
+        for (int i = 0; i <= 7 ; i++) 
         {
+            Card cardFromDeck = deck.removeCard();
+            player1.addCard(cardFromDeck);
+            i++;
+        }
+        player1.printCards();
+        
+        
+        while(player1 != null || player2 != null)
+        {
+            if(turnCount/2 == 1){
+                turn1Player = player1;
+                turn2Player = player2;
+            }
+            else
+            {
+                turn1Player = player2;
+                turn2Player = player1;
+            }
+            turnCount++;
+            
             System.out.print("Player 1 it is your turn.");
-            Turn(player1, player2, books1);
+            Turn(turn1Player, turn2Player, books1, deck);
             System.out.print("Player 2 it is your turn.");
-            Turn(player1,player2, books2);
+            Turn(turn1Player,turn1Player, books2, deck);
+            
         }
         
         System.out.print("The game is over.");   
         if (books1 > books2) {
             System.out.print("Player 1 is the Winner!!");
-        }                                                                                   )
+        }                                                                                   
         else if (books1 < books2)
             System.out.print("Player 2 is the Winner!!");
         else{
@@ -33,35 +55,29 @@ public class GoFishGame
         }
     }
 
-    public static void Turn(int player1[], int player2[], int book, ) 
+    public static void Turn(CardHand turn1Player, CardHand turn2Player, int book, CardDeck deck) 
     {
-        while(player2[] != null || player1[] != null)
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println("Player 1 ask Player 2 for a card"); 
+        String guess = scan.nextLine();
+
+        boolean lookThroughHand = turn2Player.findCard(guess);
+        
+        if(lookThroughHand == true)
         {
-            System.out.println("Player 1 ask Player 2 for a card"); 
-            int guess = scan.nextInt();
-
-            for (int i = 0; i < player2.length+1 ; i++) 
-            {
-                if(player2[guess] != player2[i])
-                {
-                    System.out.println("Go Fish!!!!");
-                    System.out.println("You have drawn 1 card from the pile");
-                    //add card from pile to player 1 hand
-                    //print player 1 hand
-                }
-                if(player2[guess] == player2[i])
-                {
-                    // remove player2[i] from the array player2 wasn't sure how to dop with array
-                    System.out.println("The card has been moved from player 2 to player 1's hand");
-                    //remove card from player1 2 hand array
-                    if(player2[guess] == player1[i])
-                    {
-                        //remove card from player1 hand
-                    }   
-                    book++;
-                }
-            }
-
+            turn2Player.pinchCard(guess);
+            book++;
+            System.out.print(book);
+            //turn1Player.printCards(); //maybe unnessesary to print the hand right here it doesnt change
         }
-    }
+        else
+        {
+            System.out.println("Go Fish!!!!");
+            Card temp = deck.removeCard();
+            turn1Player.addCard(temp);
+            System.out.println("You have drawn 1 card from the remaining deck");
+            turn1Player.printCards();
+        } 
+    } 
 }
