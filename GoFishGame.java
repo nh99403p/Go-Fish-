@@ -92,7 +92,6 @@ public class GoFishGame
         String guess = scan.nextLine();
 
         boolean lookThroughHand = turn2Player.findCard(guess);
-        //System.out.print("check boolean"+lookThroughHand);
 
         if(lookThroughHand == false)
         {
