@@ -19,4 +19,13 @@ public class CardHand extends CardHolder{
         }
         return new Card(0);
     }
+
+    //I TRIED!!!!
+    /*
+    public void checkDoubles(){
+        for (int var = 0; var < cardlist.size(); var++){
+            if (cardlist.get(var).getName().equals(cardlist.get(var).getName())){
+
+    }
+    */
 }
