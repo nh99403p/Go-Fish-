@@ -1,5 +1,5 @@
 import java.util.Scanner;
-//Add something tio check the hand for pairs immidetly aftert its been made
+
 public class GoFishGame
 {
     public static void main(String[] args)
@@ -18,18 +18,40 @@ public class GoFishGame
 
         for(int i = 0; i <= 6 ; i++) 
         {
-            Card cardFromDeck = deck.removeCard();
-            player1.addCard(cardFromDeck);
+            Card cardFromDeck1 = deck.removeCard();
+            boolean checkDouble = player1.findCard((cardFromDeck1).getName());
+            if(checkDouble == true)
+            {
+                player1.pinchCard((cardFromDeck1).getName());
+                books1++;
+                System.out.println("Player 1 you got lucky and were dealt a pair. You got " +books1+ " books");
+
+            }
+            else
+            {
+                player1.addCard(cardFromDeck1);
+            }
         }
         System.out.println("This is your hand Player 1:");
         player1.printCards();
         
-        
         for(int i = 0; i <= 6 ; i++) 
         {
-            Card cardFromDeck = deck.removeCard();
-            player2.addCard(cardFromDeck);
+            Card cardFromDeck2 = deck.removeCard();
+            boolean checkDouble2 = player1.findCard((cardFromDeck2).getName());
+            if(checkDouble2 == true)
+            {
+                player2.pinchCard((cardFromDeck2).getName());
+                books2++;
+                System.out.println("Player 2 you got lucky and were dealt a pair. You got " +books2+ " books");
+
+            }
+            else
+            {
+                player2.addCard(cardFromDeck2);
+            }
         }
+
         System.out.println("This is your hand Player 2:");
         player2.printCards();
         
@@ -48,11 +70,7 @@ public class GoFishGame
             }
             turnCount++;
             
-            //System.out.println("Player 1 it is your turn.");
             Turn(turn1Player, turn2Player, books1, deck);
-            //System.out.println("Player 2 it is your turn.");
-            //Turn(turn1Player,turn2Player, books2, deck);
-            System.out.println("New TurnCount"+turnCount);
         }
 
         System.out.print("The game is over.");   
@@ -74,7 +92,7 @@ public class GoFishGame
         String guess = scan.nextLine();
 
         boolean lookThroughHand = turn2Player.findCard(guess);
-        System.out.print("check boolean"+lookThroughHand);
+        //System.out.print("check boolean"+lookThroughHand);
 
         if(lookThroughHand == false)
         {
@@ -91,6 +109,8 @@ public class GoFishGame
             turn1Player.pinchCard(guess);
             book++;
             System.out.println("They had the card, you now have "+book+" books");
+            System.out.println("This is you new hand:");
+            turn1Player.printCards();
         } 
     } 
 }
